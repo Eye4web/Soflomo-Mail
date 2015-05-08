@@ -63,6 +63,7 @@ class MailService implements MailServiceInterface
     protected $renderer;
     protected $defaultMessage;
     protected $layout;
+    protected $autoCssInliner;
 
     /**
      * Constructor
@@ -77,11 +78,13 @@ class MailService implements MailServiceInterface
         TransportInterface $transport,
         RendererInterface $renderer,
         Message $defaultMessage = null,
-        $layout = null
+        $layout = null,
+        $autoCssInliner = null
     ) {
-        $this->transport = $transport;
-        $this->renderer  = $renderer;
-        $this->layout    = $layout;
+        $this->transport      = $transport;
+        $this->renderer       = $renderer;
+        $this->layout         = $layout;
+        $this->autoCssInliner = $autoCssInliner;
 
         if (null !== $defaultMessage) {
             $this->defaultMessage = $defaultMessage;
@@ -190,6 +193,13 @@ class MailService implements MailServiceInterface
             if (!is_null($this->layout)) {
                 $html = $this->getRenderer()->render($this->layout, array('content' => $html));
             }
+        }
+
+        if (isset($options['auto_inline_css'])) {
+            $this->autoCssInliner->setUseInlineStylesBlock(true);
+            $this->setExcludeMediaQueries(false);
+            $this->autoCssInliner->setHtml($html);
+            $html = $this->autoCssInliner->convert();
         }
 
         $body = new MimeMessage;

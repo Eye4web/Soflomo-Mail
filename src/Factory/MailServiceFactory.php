@@ -42,6 +42,7 @@ namespace Soflomo\Mail\Factory;
 use Soflomo\Mail\Service\MailService;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 class MailServiceFactory implements FactoryInterface
 {
@@ -56,6 +57,8 @@ class MailServiceFactory implements FactoryInterface
 
         $layout = (isset($config['layout'])) ? $config['layout'] : null;
 
-        return new MailService($transport, $renderer, $message, $layout);
+        $autoCssInliner = new CssToInlineStyles();
+
+        return new MailService($transport, $renderer, $message, $layout, $autoCssInliner);
     }
 }

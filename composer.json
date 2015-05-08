@@ -18,7 +18,8 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zend-mail": "~2.0",
-        "zendframework/zend-servicemanager": "~2.0"
+        "zendframework/zend-servicemanager": "~2.0",
+        "tijsverkoyen/css-to-inline-styles": "~1.5.4"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
