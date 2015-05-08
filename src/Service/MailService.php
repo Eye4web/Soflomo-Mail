@@ -197,7 +197,7 @@ class MailService implements MailServiceInterface
 
         if (isset($options['auto_inline_css'])) {
             $this->autoCssInliner->setUseInlineStylesBlock(true);
-            $this->setExcludeMediaQueries(false);
+            $this->autoCssInliner->setExcludeMediaQueries(false);
             $this->autoCssInliner->setHtml($html);
             $html = $this->autoCssInliner->convert();
         }
